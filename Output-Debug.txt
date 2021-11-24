@@ -1,0 +1,91 @@
+﻿'project1.exe' (Win32): Loaded 'C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\bin\project1.exe'. Symbols loaded.
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ntdll.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\kernel32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\KernelBase.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\bin\sfml-system-d-2.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\bin\sfml-graphics-d-2.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\bin\sfml-window-d-2.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msvcp140d.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\vcruntime140d.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ucrtbased.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\gdi32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\win32u.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\winmm.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\winmm.dll'. 
+'project1.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\winmm.dll'
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\gdi32full.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msvcrt.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msvcp_win.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ucrtbase.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\user32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\advapi32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\sechost.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\rpcrt4.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\opengl32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\combase.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\glu32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\imm32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\uxtheme.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msctf.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\oleaut32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\kernel.appcore.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\windows.storage.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\wldp.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\SHCore.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\shlwapi.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\nvlt.inf_amd64_04baa46c48be5bb8\nvdlist.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\version.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\bcryptprimitives.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\clbcatq.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\AppXDeploymentClient.dll'. 
+'project1.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\AppXDeploymentClient.dll'
+'project1.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_5d54dd32fa1ef4d4\ig9icd32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ole32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\shell32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\dwmapi.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\dxgi.dll'. 
+'project1.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\version.dll'
+'project1.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\nvlt.inf_amd64_04baa46c48be5bb8\nvdlist.dll'
+The thread 0x5610 has exited with code 0 (0x0).
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ResourcePolicyClient.dll'. 
+'project1.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\ResourcePolicyClient.dll'
+'project1.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\nvlt.inf_amd64_04baa46c48be5bb8\nvdlist.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\version.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_5d54dd32fa1ef4d4\igdgmm32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_5d54dd32fa1ef4d4\igdml32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_5d54dd32fa1ef4d4\igc32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\powrprof.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\umpdc.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\dinput8.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\InputHost.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\WinTypes.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\propsys.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\CoreMessaging.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ws2_32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\CoreUIComponents.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ntmarta.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\hid.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\setupapi.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\cfgmgr32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\bcrypt.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\devobj.dll'. 
+'project1.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\version.dll'
+'project1.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\nvlt.inf_amd64_04baa46c48be5bb8\nvdlist.dll'
+The thread 0x3238 has exited with code 0 (0x0).
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\wintrust.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\crypt32.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msasn1.dll'. 
+'project1.exe' (Win32): Loaded 'C:\Windows\SysWOW64\TextInputFramework.dll'. 
+The thread 0x3110 has exited with code 1 (0x1).
+'project1.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_5d54dd32fa1ef4d4\igdml32.dll'
+The thread 0x3320 has exited with code 0 (0x0).
+The thread 0x5940 has exited with code 0 (0x0).
+The thread 0x2350 has exited with code 0 (0x0).
+The thread 0x5a10 has exited with code 0 (0x0).
+The thread 0x5338 has exited with code 0 (0x0).
+The thread 0x5fd0 has exited with code 0 (0x0).
+The thread 0x4764 has exited with code 0 (0x0).
+The thread 0x4c68 has exited with code 0 (0x0).
+The thread 0x2ee4 has exited with code 0 (0x0).
+The thread 0x1970 has exited with code 0 (0x0).
+The program '[7740] project1.exe' has exited with code 0 (0x0).
