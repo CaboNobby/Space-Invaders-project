@@ -31,6 +31,16 @@ struct GD
 {
 	sf::Font font;				//a shared font to use everywhere
 	sf::RenderWindow* pWindow;	//can't render anything without this
+	sf::Sprite spaceShip;
+	sf::Sprite bullet;
+	sf::Sprite enemyspr[44];
+	sf::IntRect rect[4] = { (sf::IntRect(2, 3, 12, 10)),(sf::IntRect(19, 3, 12, 10)),(sf::IntRect(2, 19, 11, 10)),(sf::IntRect(19, 19, 11, 10)) };
+	sf::CircleShape circle[44];
+	int enemyNumber = 11;
+	int newypos = 0;
+	float xpos = 50;
+	int spr = 0; // the sprite we are currently in
+	float xpeed = 0;
 	/*string playerName;*/			//the player's name is needed by different objects
 };
 enum State {

@@ -7,7 +7,7 @@ using namespace std;
 //Where the fun starts
 class Game {
 public:
-	Game() :myspaceship(mgd),myenemy(mgd) {
+	Game() :myspaceship(mgd),myenemy(mgd),mycollision(mgd) {
 		mgd.pWindow = &window;
 	};
 	void Run();                                                 //Initialize the program
@@ -22,6 +22,7 @@ private:
 	sf::RenderWindow window;
 	sf::Event event;
 	GD mgd;
+	Collision mycollision;
 	spaceship myspaceship;
 	enemy myenemy;
 	sf::Texture bgTexture;
@@ -47,7 +48,7 @@ void::Game::GameState() {
 	switch (state) {
 	case State::GAME_PLAYING:
 		Render();
-		myspaceship.Update();
+		mycollision.Update();
 		break;
 	case State::EXIT:
 		window.close();
@@ -66,11 +67,13 @@ void::Game::GameState() {
 void::Game::Update() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		state = State::EXIT;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+		state = State::MAIN_MENU;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 	state = State::GAME_PLAYING;
-	if (myspaceship.capullo == true) {
+	if (mycollision.capullo == true) {
 		state = State::GAME_OVER;
-		myspaceship.capullo = false;
+		mycollision.capullo = false;
 	}
 }
 void Game::Render() {
@@ -92,11 +95,11 @@ void Game::Render() {
 		y = 0;
 	}
 	myspaceship.Render();
-	/*myenemy.RenderEnemies();*/
+	myenemy.RenderEnemies();
 }
 
 void Game::Run() {
-	myspaceship.Init();
+	mycollision.Init();
 	window.create(sf::VideoMode(GDC::SCREEN_RES.x, GDC::SCREEN_RES.y),"Space Invaders");
 	while (window.isOpen())
 	{
