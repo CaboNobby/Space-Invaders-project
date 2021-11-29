@@ -1,5 +1,6 @@
 #include <assert.h>
 #include "SFML/Graphics.hpp"
+#include "time.h"
 #include "Structs.h"
 #include "Objects.h"
 
@@ -29,6 +30,10 @@ private:
 	sf::Sprite bgSprite;
 	sf::Sprite goSprite;
 	sf::Sprite menuSprite;
+	sf::Clock clock;
+	bool paused = false;
+	float deltatime;
+	float rate = 0.5f;
 	char key = GDC::NO_KEY;//current key press 
 };
 void::Game::GameOver() {
@@ -48,6 +53,7 @@ void::Game::GameState() {
 	switch (state) {
 	case State::GAME_PLAYING:
 		Render();
+		if(paused == false)
 		mycollision.Update();
 		break;
 	case State::EXIT:
@@ -65,6 +71,15 @@ void::Game::GameState() {
 
 }
 void::Game::Update() {
+	deltatime = clock.getElapsedTime().asSeconds();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) && paused == false && deltatime > rate) {
+		paused = true;
+		clock.restart();
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) && paused == true && deltatime > rate) {
+		paused = false;
+		clock.restart();
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		state = State::EXIT;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
@@ -115,7 +130,6 @@ void Game::Run() {
 		window.clear();
 		GameState();
 		Update();
-		/*myenemy.Update();*/
 		window.display();
 	}
 }

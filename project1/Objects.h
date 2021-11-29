@@ -15,6 +15,7 @@ private:
 	float ypos = 530.f;
 	int enemieskilled = 0;
 	bool negative;
+	bool colliding = false;
 };
 class spaceship {
  public:
@@ -68,24 +69,6 @@ void Collision::Update() {
 		cgd.bullet.setColor(sf::Color(244,255,191));
 		ypos-= 5;
     }
-	cgd.spr = 11;
-	for (int enemyType(0); enemyType < 4; enemyType++) {
-		if ((cgd.enemyspr[cgd.spr].getPosition().x + cgd.enemyspr[cgd.spr].getGlobalBounds().width) > 800) {
-			cgd.xpos = 800;
-			cgd.newypos += 50;
-			negative = true;
-		}
-		cgd.spr += 10;
-	}
-	cgd.spr = 1;
-	for (int enemyType(0); enemyType < 4; enemyType++) {
-		if (cgd.enemyspr[cgd.spr].getPosition().x < 10) {
-			cgd.xpos = 0;
-			negative = false;
-			cgd.newypos += 50;
-		}
-		cgd.spr += 10;
-	}
 	if (negative == false)
 		cgd.xpeed += 0.5f;
 	else
@@ -109,9 +92,24 @@ void Collision::Update() {
 					enemieskilled++;
 				}
 			}
+			if ((cgd.enemyspr[onScreen + cgd.spr].getPosition().x + cgd.enemyspr[onScreen + cgd.spr].getGlobalBounds().width) > 800 && cgd.enemyspr[onScreen + cgd.spr].getColor() != sf::Color::Transparent) {
+				negative = true;
+				if (colliding == false) {
+					cgd.newypos += 50;
+					colliding = true;
+				}
+			}
+			if (cgd.enemyspr[onScreen +cgd.spr].getPosition().x < 10 && cgd.enemyspr[onScreen + cgd.spr].getColor() != sf::Color::Transparent) {
+				negative = false;
+				if (colliding == true) {
+					cgd.newypos += 50;
+					colliding = false;
+				}
+			}
 			if (cgd.enemyspr[onScreen + cgd.spr].getPosition().y >= 540) {
 				capullo = true;
 				cgd.newypos = 0;
+				enemieskilled = 44;
 			}
 			if(enemieskilled>=44)
 			for (enemieskilled;enemieskilled > 0; enemieskilled--) {
@@ -126,7 +124,6 @@ class enemy {
 public:
 	enemy(GD& eGD) :egd(eGD){};
 	void RenderEnemies();
-	void Update();
 private:
 	GD& egd;
 	sf::Texture enemytxt;
