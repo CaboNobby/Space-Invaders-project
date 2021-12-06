@@ -98,6 +98,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameController.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="Structs.h" />
   </ItemGroup>

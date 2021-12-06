@@ -1,103 +1,282 @@
 #include <assert.h>
 #include "SFML/Graphics.hpp"
-#include "time.h"
+#include "SFML/Audio.hpp"
 #include "Structs.h"
 #include "Objects.h"
+#include "GameController.h"
 
 using namespace std;
-//Where the fun starts
+/*
+In charge of running the game and loading the different game modes 
+*/
 class Game {
 public:
-	Game() :myspaceship(mgd),myenemy(mgd),mycollision(mgd) {
+	Game() :myspaceship(mgd),myenemy(mgd),mycollision(mgd),mygamecontroller(mgd) {
 		mgd.pWindow = &window;
 	};
-	void Run();                                                 //Initialize the program
-	void Render();
-	void Update();
+	void Run();                                                 //Program beggining
+	void RenderBackground();
+	void GameMenu();
+	//It loads the game state we are in
 	void GameState();
+	void UpdateGameState();
+	void GameInstructions();
+	//Display players scores and names
+	void ScoreTable();
+	//Compare players score and hold the higher one at higherScore
+	//Set the player name
+	void Scores();
 	void GameOver();
+	//Displayes player score while is playing
+	void Counter();
+	//setup
 	void Init();
 
 private:
-	State state = /*GAME_PLAYING*/MAIN_MENU;
+	State state = TITLE_SCREEN;
 	sf::RenderWindow window;
-	sf::Event event;
-	GD mgd;
+	sf::Event event;                             //Process events
+	GD mgd;                                      //Shared game data
+	GameController mygamecontroller;
 	Collision mycollision;
-	spaceship myspaceship;
+	Spaceship myspaceship;
 	enemy myenemy;
 	sf::Texture bgTexture;
+	sf::Texture ttlTexture;
+	sf::Text scoreText;
+	sf::Text nameText;
+	sf::Sprite ptrSprite;
+	sf::Texture ptrTexture;
 	sf::Sprite bgSprite;
 	sf::Sprite goSprite;
-	sf::Sprite menuSprite;
-	sf::Clock clock;
-	bool paused = false;
-	float deltatime;
-	float rate = 0.5f;
-	char key = GDC::NO_KEY;//current key press 
+	sf::Sprite ttlSprite;
+	sf::Texture insTexture;
+	sf::Texture goTexture;
+	sf::Sprite insSprite;
+	sf::Music music;
+	string PlayerName[5];
+	string PlayerScore[5];
+	bool playing = false;
+	int scoreArray[5] = {};
+	int gapNumber = 4;     //Keeps the gaps available to be filled up by players
+	int gap = 0;           //Last gap to be filled up
+	int higherScore = 0;
+	int instructions = 250;
+	int play = 300;
+	int player = 0;
+	int leaderBoard = 350;
+	int exit = 400;
+
 };
+void ::Game::Counter() {
+	std::ostringstream numberToString;
+	numberToString << mgd.points;
+	mgd.score.setFont(mgd.instructionsFont);
+	mgd.score.setString(numberToString.str());
+	window.draw(mgd.score);
+
+}
+void::Game::Scores() {
+	if (mgd.points > higherScore) {
+		higherScore = mgd.points;
+		//Once game is played the fifth time reorganize the scores
+		if(player > 4){
+			for (gapNumber = 4; gapNumber > gap; gapNumber--)
+			{
+				scoreArray[gapNumber ] = scoreArray[gapNumber -1];
+				PlayerName[gapNumber] = PlayerName[gapNumber -1];
+		    }
+		}
+		PlayerName[gapNumber] = mygamecontroller.word;
+		scoreArray[gapNumber] = mgd.points;
+		if (gapNumber > gap)
+			gapNumber--;
+		player++;
+	}
+}
+void::Game::ScoreTable() {
+	int y = 0;
+	int MaxName = 0;
+	sf::Text tabText;
+	tabText.setFont(mgd.arcadeFont);
+	tabText.setString("High Score");
+	tabText.setScale(1.5f, 1.5f);
+	tabText.setPosition(280, 20);
+	window.draw(tabText);
+	//Only five people can be on the ScoreTable
+	for (int i(5); i > MaxName; i--)
+	{
+		PlayerScore[i-1] = std::to_string(scoreArray[i-1]);
+		nameText.setString(PlayerName[i-1]);
+		nameText.setPosition(150, 200 + y);
+		scoreText.setString(PlayerScore[i-1]);
+		scoreText.setPosition(400, 200 + y);
+		window.draw(nameText);
+		window.draw(scoreText);
+		y += 20;
+	}
+}
 void::Game::GameOver() {
-	sf::Texture bgtxt;
-	if (!bgtxt.loadFromFile("data/gameover.png"))
-		assert(false);
-	goSprite.setTexture(bgtxt);
+	goSprite.setTexture(goTexture);
 	window.draw(goSprite);
 }
 void::Game::Init() {
-	if (!bgTexture.loadFromFile("data/titlescreen.png"))
+	scoreText.setFont(mgd.arcadeFont);
+	nameText.setFont(mgd.arcadeFont);
+	if (!ttlTexture.loadFromFile("data/titlescreen.png"))
 		assert(false);
-	menuSprite.setTexture(bgTexture);
-	window.draw(menuSprite);
+	if (!mgd.instructionsFont.loadFromFile("data/fonts/comic.ttf"))
+		assert(false);
+	if (!mgd.arcadeFont.loadFromFile("data/fonts/ARCADECLASSIC.ttf"))
+		assert(false);
+	if (!insTexture.loadFromFile("data/gameinstructions.png"))
+		assert(false);
+	if (!goTexture.loadFromFile("data/gameover.png"))
+		assert(false);
+	if (!ptrTexture.loadFromFile("data/LargeAlien.png"))
+		assert(false);
+	if (!bgTexture.loadFromFile("data/background.png"))
+		assert(false);
+}
+void::Game::GameMenu() {
+	sf::Text menuText;
+	int ypos = 250;
+	const int textnumber = 4;
+	string text[textnumber] = { "Instructions","Play","Leaderboard" ,"Exit" };     //Holds the name of the different game modes
+	menuText.setFont(mgd.arcadeFont);
+	for (int textdisplayed(0); textdisplayed < textnumber; textdisplayed++) {
+		menuText.setString(text[textdisplayed]);
+		menuText.setPosition(330, ypos);
+		window.draw(menuText);
+		ypos += 50;
+	}
+	ptrSprite.setTexture(ptrTexture);
+	ptrSprite.setScale(0.04f, 0.04f);
+	ptrSprite.setPosition(280, mgd.ptrypos);
+	window.draw(ptrSprite);
+}
+void::Game::GameInstructions() {
+	insSprite.setTexture(insTexture);
+	insSprite.setPosition(-250, 0);
+	window.draw(insSprite);
 }
 void::Game::GameState() {
+	RenderBackground();
 	switch (state) {
 	case State::GAME_PLAYING:
-		Render();
-		if(paused == false)
-		mycollision.Update();
+		myspaceship.Render();
+		myenemy.RenderEnemies();
+		myenemy.Colour();
+		Counter();
 		break;
 	case State::EXIT:
 		window.close();
 		break;
-	case State::MAIN_MENU:
-		Init();
+	case State::TITLE_SCREEN:
+		ttlSprite.setTexture(ttlTexture);
+		window.draw(ttlSprite);
 		break;
 	case State::GAME_OVER:
 		GameOver();
+		break;
+	case State::MAIN_MENU:
+		GameMenu();
+		break;
+	case State ::GAME_INSTRUCTIONS:
+		GameInstructions();
+		break;
+	case State ::LEADER_BOARD:
+		ScoreTable();
+		break;
+	case State::GET_NAME:
+		mygamecontroller.AskPlayerName();
+		mygamecontroller.getName = true;
 		break;
 	default:
 		assert(false);
 	}
 
 }
-void::Game::Update() {
-	deltatime = clock.getElapsedTime().asSeconds();
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) && paused == false && deltatime > rate) {
-		paused = true;
-		clock.restart();
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) && paused == true && deltatime > rate) {
-		paused = false;
-		clock.restart();
-	}
+void::Game::UpdateGameState() {
+	mgd.deltatime = mgd.clock.getElapsedTime().asSeconds();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		state = State::EXIT;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-		state = State::MAIN_MENU;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-	state = State::GAME_PLAYING;
-	if (mycollision.capullo == true) {
-		state = State::GAME_OVER;
-		mycollision.capullo = false;
+	switch (state) {
+
+	case State::GAME_PLAYING:
+		mygamecontroller.KeyHandler();
+		mycollision.Update();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+			state = State::MAIN_MENU;
+			Scores();
+		}
+		if (mycollision.capullo == true) {
+			state = State::GAME_OVER;
+			mycollision.capullo = false;
+		}
+		break;
+	case State::EXIT:
+		window.close();
+		break;
+	case State::TITLE_SCREEN:
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.deltatime > mgd.rate) {
+			state = State::MAIN_MENU;
+			mgd.clock.restart();
+		}
+		break;
+	case State::GAME_OVER:
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.deltatime > mgd.rate) {
+			Scores();
+			state = State::MAIN_MENU;
+			mgd.clock.restart();
+		}
+		break;
+	case State::MAIN_MENU:
+		//Clears word and resets the character counter for the next player
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.ptrypos == play && mgd.deltatime > mgd.rate) {
+			state = State::GET_NAME;
+			mgd.ptrypos = 250;
+			mgd.clock.restart();
+			mygamecontroller.word.clear();
+			mgd.charcounter = 0;
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.ptrypos == instructions && mgd.deltatime > mgd.rate) {
+			state = State::GAME_INSTRUCTIONS;
+			mgd.clock.restart();
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.ptrypos == leaderBoard)
+			state = State::LEADER_BOARD;
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.ptrypos == exit)
+			state = State::EXIT;
+		mygamecontroller.PointerMovement();
+		break;
+	case State::GAME_INSTRUCTIONS:
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+			state = State::MAIN_MENU;
+		break;
+	case State::LEADER_BOARD:
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+			state = State::MAIN_MENU;
+		break;
+	case State::GET_NAME:
+		//Reset game counter
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.deltatime > mgd.rate) {
+			state = State::GAME_PLAYING;
+			mgd.charcounter--;
+			mgd.points = 0;
+			mygamecontroller.getName = false;
+		}
+		break;
+	default:
+		assert(false);
+
 	}
 }
-void Game::Render() {
-	int tilesInX = 19;
-	int tilesInY = 12;
+void Game::RenderBackground() {
+	int tilesInX = 19; //tiles to draw in a row
+	int tilesInY = 12; //tiles to draw in a column
 	float x = 0;
 	float y = 0;
-	if (!bgTexture.loadFromFile("data/background.png"))
-		assert(false);
 	bgSprite.setTexture(bgTexture);
 	bgSprite.setScale(2, 2);
 	for (int tiles(0); tiles < tilesInX; tiles++) {
@@ -109,32 +288,35 @@ void Game::Render() {
 		}
 		y = 0;
 	}
-	myspaceship.Render();
-	myenemy.RenderEnemies();
 }
 
 void Game::Run() {
-	mycollision.Init();
+	Init();
+	myenemy.Init();
+	mygamecontroller.Init();
 	window.create(sf::VideoMode(GDC::SCREEN_RES.x, GDC::SCREEN_RES.y),"Space Invaders");
+	if (!music.openFromFile("data/trial.wav"))
+		assert(false);
 	while (window.isOpen())
 	{
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-			/*if (event.type == sf::Event::TextEntered)
-				if (event.text.unicode < GDC::ASCII_RANGE) {
-					TextEntered(static_cast<char>(event.text.unicode));
-				}*/
+			if (event.type == sf::Event::TextEntered)
+			mygamecontroller.HandleInput(static_cast<char>(event.text.unicode));
+				
 		}
 		window.clear();
 		GameState();
-		Update();
+		UpdateGameState();
 		window.display();
 	}
 }
+//Where it all starts
 int main()
 {
+	srand(time(NULL));
 	Game g;
 	g.Run();
 	return EXIT_SUCCESS;
