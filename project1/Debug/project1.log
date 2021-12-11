@@ -1,1 +1,14 @@
-﻿
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (sfml_game_skeleton.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  main.cpp
+C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\project1\Objects.h(253,73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\project1\Objects.h(254,73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\project1\GameController.h(24,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\project1\GameController.h(40,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\project1\GameController.h(61,21): warning C4551: function call missing argument list
+C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\project1\main.cpp(110,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\project1\main.cpp(112,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\project1\main.cpp(150,29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\project1\main.cpp(156,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\project1\main.cpp(293,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\project1\main.cpp(326,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  project1.vcxproj -> C:\Users\luisj\OneDrive\Escritorio\ProyectosUni\tutorials\Space Invaders\bin\project1.exe

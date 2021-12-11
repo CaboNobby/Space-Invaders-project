@@ -4,6 +4,12 @@
 #include "Structs.h"
 #include "Objects.h"
 #include "SFML/Graphics.hpp"
+
+void GameController::Init() {
+	if (!tiritobuffer.loadFromFile("data/chuk.wav"))
+		assert(false);
+	tirito.setBuffer(tiritobuffer);
+}
 void::GameController::KeyHandler() {
 	gcd.deltatime = gcd.clock.getElapsedTime().asSeconds();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) && gcd.paused == false && gcd.deltatime > gcd.rate) {
@@ -15,57 +21,56 @@ void::GameController::KeyHandler() {
 		gcd.clock.restart();
 	}
 	if (gcd.paused == false) {
-		gcd.bullet.setPosition(lastpos, gcd.ypos);
-		gcd.spaceship.setPosition(gcd.shipxpos, 550);
+		gcd.bullet.setPosition(lastpos, gcd.yPos);
+		gcd.spaceship.setPosition(gcd.shipXPos, 550);
 		if (gcd.shooting != true)
 			gcd.bullet.setColor(sf::Color::Transparent);
 		else if (gcd.shooting == true) {
 			gcd.bullet.setColor(sf::Color(244, 255, 191));
-			gcd.ypos -= 5;
+			gcd.yPos -= 1.4f;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-			gcd.shipxpos -= 1;
+			gcd.shipXPos -= 0.5f;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-			gcd.shipxpos += 1;
+			gcd.shipXPos += 0.5f;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && gcd.shooting == false) {
 			gcd.shooting = true;
-			lastpos = gcd.shipxpos;
+			lastpos = gcd.shipXPos;
 			tirito.play();
 		}
 	}
 }
 void::GameController::PointerMovement() {
 	gcd.deltatime = gcd.clock.getElapsedTime().asSeconds();
-	if (gcd.ptrypos > lowestButton && gcd.deltatime > gcd.rate)
+	if (gcd.ptrYPos > lowestButton && gcd.deltatime > gcd.rate)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-			gcd.ptrypos -= 50;
+			gcd.ptrYPos -= 50;
 			gcd.clock.restart();
 		}
-	if (gcd.ptrypos < highestButton)
+	if (gcd.ptrYPos < highestButton)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && gcd.deltatime > gcd.rate) {
-			gcd.ptrypos += 50;
+			gcd.ptrYPos += 50;
 			gcd.clock.restart();
 		}
 }
 void GameController::HandleInput(char key)
 {
-	int MaxCharacter = 12;
 	if (getName == true) {
-		if (sf::Keyboard::isKeyPressed)
+		if (sf::Keyboard::isKeyPressed )
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace) && !word.empty())
 			{
 				//Erases last character
-				if (gcd.charcounter < MaxCharacter)
+				if (gcd.charCounter < MaxCharacter)
 				{
 					word.erase(word.size() - 1);
-					gcd.charcounter = gcd.charcounter - 2;
+					gcd.charCounter = gcd.charCounter - 2;
 				}
-				else if (gcd.charcounter >= MaxCharacter) {
+				else if (gcd.charCounter >= MaxCharacter) {
 					word.erase(word.size() - 1);
-					gcd.charcounter = gcd.charcounter - 2;
+					gcd.charCounter = gcd.charCounter - 2;
 				}
 			}
 			//Lets the name to be separated by spaces
@@ -73,12 +78,12 @@ void GameController::HandleInput(char key)
 			{
 				space = " ";
 				word += space;
-				if (gcd.charcounter < MaxCharacter)
-					gcd.charcounter--;
+				if (gcd.charCounter < MaxCharacter)
+					gcd.charCounter--;
 			}
 			//Limits the number of characters to 12
-			if (gcd.charcounter < MaxCharacter) {
-				gcd.charcounter++;
+			if (gcd.charCounter < MaxCharacter) {
+				gcd.charCounter++;
 				if ((isdigit(key) || isalpha(key)))
 				{
 					word += static_cast<char>(key);

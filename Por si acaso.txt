@@ -1,3 +1,8 @@
+
+ifstream;
+fstream;
+ofstream;
+ostream
 class Game {
 public:
 	Game() :myspaceship(mgd),myenemy(mgd),mycollision(mgd),mygamecontroller(mgd) {

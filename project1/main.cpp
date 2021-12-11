@@ -15,6 +15,7 @@ public:
 		mgd.pWindow = &window;
 	};
 	void Run();                                                 //Program beggining
+private:
 	void RenderBackground();
 	void GameMenu();
 	//It loads the game state we are in
@@ -31,8 +32,6 @@ public:
 	void Counter();
 	//setup
 	void Init();
-
-private:
 	State state = TITLE_SCREEN;
 	sf::RenderWindow window;
 	sf::Event event;                             //Process events
@@ -40,7 +39,7 @@ private:
 	GameController mygamecontroller;
 	Collision mycollision;
 	Spaceship myspaceship;
-	enemy myenemy;
+	Enemy myenemy;
 	sf::Texture bgTexture;
 	sf::Texture ttlTexture;
 	sf::Text scoreText;
@@ -96,7 +95,7 @@ void::Game::Scores() {
 }
 void::Game::ScoreTable() {
 	int y = 0;
-	int MaxName = 0;
+	int MaxName = 5;
 	sf::Text tabText;
 	tabText.setFont(mgd.arcadeFont);
 	tabText.setString("High Score");
@@ -104,12 +103,12 @@ void::Game::ScoreTable() {
 	tabText.setPosition(280, 20);
 	window.draw(tabText);
 	//Only five people can be on the ScoreTable
-	for (int i(5); i > MaxName; i--)
+	for (int i(0); i < MaxName; i++)
 	{
-		PlayerScore[i-1] = std::to_string(scoreArray[i-1]);
-		nameText.setString(PlayerName[i-1]);
+		PlayerScore[i] = std::to_string(scoreArray[i]);
+		nameText.setString(PlayerName[i]);
 		nameText.setPosition(150, 200 + y);
-		scoreText.setString(PlayerScore[i-1]);
+		scoreText.setString(PlayerScore[i]);
 		scoreText.setPosition(400, 200 + y);
 		window.draw(nameText);
 		window.draw(scoreText);
@@ -137,6 +136,8 @@ void::Game::Init() {
 		assert(false);
 	if (!bgTexture.loadFromFile("data/background.png"))
 		assert(false);
+	if (!music.openFromFile("data/Cantina.ogg"))
+		assert(false);
 }
 void::Game::GameMenu() {
 	sf::Text menuText;
@@ -152,7 +153,7 @@ void::Game::GameMenu() {
 	}
 	ptrSprite.setTexture(ptrTexture);
 	ptrSprite.setScale(0.04f, 0.04f);
-	ptrSprite.setPosition(280, mgd.ptrypos);
+	ptrSprite.setPosition(280, mgd.ptrYPos);
 	window.draw(ptrSprite);
 }
 void::Game::GameInstructions() {
@@ -168,9 +169,12 @@ void::Game::GameState() {
 		myenemy.RenderEnemies();
 		myenemy.Colour();
 		Counter();
+		if (playing == false) {
+			music.play();
+			playing = true;
+		}
 		break;
 	case State::EXIT:
-		window.close();
 		break;
 	case State::TITLE_SCREEN:
 		ttlSprite.setTexture(ttlTexture);
@@ -209,10 +213,12 @@ void::Game::UpdateGameState() {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 			state = State::MAIN_MENU;
 			Scores();
+			mgd.enemies = 44;
+			mycollision.quit = true;
 		}
-		if (mycollision.capullo == true) {
+		if (mycollision.gameOver == true) {
 			state = State::GAME_OVER;
-			mycollision.capullo = false;
+			mycollision.gameOver = false;
 		}
 		break;
 	case State::EXIT:
@@ -230,23 +236,25 @@ void::Game::UpdateGameState() {
 			state = State::MAIN_MENU;
 			mgd.clock.restart();
 		}
+		if (playing == true)
+			music.stop();
 		break;
 	case State::MAIN_MENU:
 		//Clears word and resets the character counter for the next player
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.ptrypos == play && mgd.deltatime > mgd.rate) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.ptrYPos == play && mgd.deltatime > mgd.rate) {
 			state = State::GET_NAME;
-			mgd.ptrypos = 250;
+			mgd.ptrYPos = 250;
 			mgd.clock.restart();
 			mygamecontroller.word.clear();
-			mgd.charcounter = 0;
+			mgd.charCounter = 0;
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.ptrypos == instructions && mgd.deltatime > mgd.rate) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.ptrYPos == instructions && mgd.deltatime > mgd.rate) {
 			state = State::GAME_INSTRUCTIONS;
 			mgd.clock.restart();
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.ptrypos == leaderBoard)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.ptrYPos == leaderBoard)
 			state = State::LEADER_BOARD;
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.ptrypos == exit)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.ptrYPos == exit)
 			state = State::EXIT;
 		mygamecontroller.PointerMovement();
 		break;
@@ -262,7 +270,7 @@ void::Game::UpdateGameState() {
 		//Reset game counter
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && mgd.deltatime > mgd.rate) {
 			state = State::GAME_PLAYING;
-			mgd.charcounter--;
+			mgd.charCounter--;
 			mgd.points = 0;
 			mygamecontroller.getName = false;
 		}
@@ -293,10 +301,9 @@ void Game::RenderBackground() {
 void Game::Run() {
 	Init();
 	myenemy.Init();
+	myspaceship.Init();
 	mygamecontroller.Init();
 	window.create(sf::VideoMode(GDC::SCREEN_RES.x, GDC::SCREEN_RES.y),"Space Invaders");
-	if (!music.openFromFile("data/trial.wav"))
-		assert(false);
 	while (window.isOpen())
 	{
 		while (window.pollEvent(event))
